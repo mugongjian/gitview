@@ -1,0 +1,102 @@
+#!/usr/bin/env python
+#coding=utf-8
+"""
+wrap some git operation to record extra infomation
+
+"""
+import sys
+import os
+import commands
+from subprocess import Popen
+from subprocess import PIPE
+
+
+class GitCommand(object):
+    def request(self, url, data):
+        from httplib import HTTPConnection
+        import urllib
+        with open("PROJECTID", "rt") as pf:
+            projectid = pf.read().strip()
+            if not projectid:
+                raise Exception(u"项目编号文件(PROJECTID) 内容为空")
+            data["project"] = projectid
+        body = urllib.urlencode(data)
+        conn = HTTPConnection(os.environ.get("MERGE_HOST"))
+        try:
+            headers = {}
+            headers["Content-Type"] = "application/x-www-form-urlencoded"
+            conn.request("POST", url, body, headers=headers)
+            conn.getresponse().read()
+        finally:
+            if conn:
+                conn.close()
+    def branch_name(self):
+        status, branch_name = commands.getstatusoutput(
+            "git rev-parse --abbrev-ref HEAD")
+        if status == 0:
+            return branch_name
+    def callback(self, argv):
+        pass
+    def last_commit(self):
+        status, output = commands.getstatusoutput("git log -1")
+        if status == 0:
+            hash = output[len("commit "): output.find("\n")]
+            return hash
+    def execute_with(self, argv):
+        status = 0
+        if len(argv) == 2 and argv[1] == "commit":
+            popen = Popen(argv)
+            stdout, stderr = popen.communicate()
+            print(stdout)
+        else:
+            status, output = commands.getstatusoutput(" ".join(argv))
+            if output:
+                sys.stdout.write(output)
+        if status == 0:
+            self.callback(argv)
+
+class GitMerge(GitCommand):
+    def callback(self, argv):
+        """git merge <branchname>"""
+        hash = self.last_commit()
+        if hash:
+            target_branch_name = self.branch_name()
+            sourcename = argv[2]
+            origin_index = argv[2].find('origin/')
+            if origin_index == 0:
+                sourcename = argv[2][len("origin/"):]
+            data = dict(targetname=target_branch_name, sourcename=sourcename)
+            self.request("/merge", data)
+
+class GitCommit(GitCommand):
+
+    def callback(self, argv):
+        """ git commit"""
+        hash = self.last_commit()
+        branch_name = self.branch_name()
+        owner = os.environ.get("GIT_USER", "silentpauljian")
+        data = dict(
+             branch=branch_name,
+             commit=hash,
+             owner=owner)
+        self.request("/commit", data)
+
+gitcommand_map = dict(
+    merge=GitMerge,
+    commit=GitCommit
+)
+def main(argv):
+    command = argv[1] if len(argv)>1 else None
+    has_argument = bool(command)
+    real_git = os.environ["REAL_GIT_PATH"]
+    if command and command in gitcommand_map:
+        argv[0] = real_git
+        gitcommand = gitcommand_map[command]()
+        gitcommand.execute_with(argv)
+    else:
+        if has_argument:
+            argv[0] = real_git
+        os.execv(real_git, argv if has_argument else [""])
+
+if __name__ == "__main__":
+    main(sys.argv)
