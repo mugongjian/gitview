@@ -1,0 +1,19 @@
+<! DOCTYPE html>
+
+<html>
+<body>
+	<form method="POST">
+		<h3>{{object.NAME}}</h3>
+		<div>
+		<label for="img_input"> img
+		</label>
+		<input id="img_input" name="img"  style="width:50em;" value="{{object.IMG}}">
+		</div>
+		<div>
+		<label for="descs_input">descs</label>
+		<textarea id="descs_input" name="descs">{{object.DESCS}}</textarea>
+		</div>
+		<input type="submit" value="submit">
+	</form>
+</body>
+</html>

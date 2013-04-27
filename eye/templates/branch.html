@@ -1,0 +1,130 @@
+<! DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+.branch{
+	width:650px;
+	margin:0 0 5px 0;
+}
+.branch .branchname {
+	display:inline-block;
+	height:200px;
+	width:50px;
+	border-top: 2px black;
+	background-color:#D5BF8A;	
+	float: left;
+}
+.branch .up{
+	display: inline-block;
+	width:300px;
+	height:200px;
+	background-color:green;
+	float: left;
+}
+.branch .down {
+	display:inline-block;
+	width:300px;
+	height:200px;
+	background-color: #C4E2EA;
+	float: left;
+}
+.branch .features{
+	display:inline;
+}
+.branch .up a {
+	color:white;
+}
+.feature {
+	margin-top:6px;
+	width:306px;
+	background-color:#BBB;
+	border: solid 2px black;
+}
+.feature .merge,.feature .core{
+	width:100px;
+	margin:0 2px 2px 0;
+	padding: 0;
+	float: left;
+}
+.feature .merge {
+	border-radius: 6px;
+	background-color:green;
+}
+.feature .core{
+	border-radius: 6px;
+	background-color:blue;
+	color:white;
+}
+.feature .core a, .feature .merge a{
+	color:white;
+}
+</style>
+</head>
+<body>
+
+{% for branch in branches %}
+<div class="branch">
+	<div class="branchname">
+		<p>{{branch["name"]}}</p>
+	</div>
+	<div class="up">
+		<div class="features">
+			{% for feature in branch["feature"][0]%}
+			<a href="/branch/{{feature.ID}}/edit" alt="">
+			{% if feature.IMG %}
+			<img src="{{feature.IMG}}"  title="{{feature.DESCS}}">
+			{%else %}
+			<p title="{{feature.DESCS}}">{{feature.NAME}}<p>
+			{%end %}
+			</a>
+			{% end%}
+		</div>
+	</div>
+	<div class="down">
+		<div class="features">
+			{% for feature in branch["feature"][1]%}
+			<a href="/branch/{{feature.ID}}/edit" alt="">
+			{% if feature.IMG %}
+			<img src="{{feature.IMG}}"  title="{{feature.DESCS}}">
+			{%else %}
+			<p title="{{feature.DESCS}}">{{feature.NAME}}<p>
+			{%end %}
+			</a>
+			{% end%}
+
+		</div>
+	</div>
+</div>
+{% end %}
+<div></div>
+<div class="feature">
+{% for feature in features %}
+	<div class="core">
+		<a href="/branch/{{feature.ID}}/edit" alt="">
+		{% if feature.IMG %}
+		<img src="{{feature.IMG}}"  title="{{feature.DESCS}}">
+		{%else %}
+		<p title="{{feature.DESCS}}">{{feature.NAME}}<p>
+		{%end %}
+		</a>
+	</div>
+	{% for merge in feature.merges %}
+	<div class="merge">
+		<a href="/branch/{{feature.ID}}/edit" alt="">
+		{% if feature.IMG %}
+		<img src="{{feature.IMG}}"  title="{{feature.DESCS}}">
+		{%else %}
+		<p title="{{feature.DESCS}}">{{feature.NAME}}<p>
+		{%end %}
+		</a>
+	</div>
+	{% end%}
+	{% end%}
+</div>
+<div>
+Copyright © 2013-2013 workflat 版权所有
+</div>
+</body>
+</html>
