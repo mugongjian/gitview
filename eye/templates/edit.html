@@ -1,19 +1,53 @@
 <! DOCTYPE html>
 
 <html>
+<head>
+<style>
+label {
+	vertical-align:top;
+	font-size:1em;
+	font-family: SimSon;
+
+}
+</style>
+</head>
 <body>
 	<form method="POST">
 		<h3>{{object.NAME}}</h3>
 		<div>
 		<label for="img_input"> img
 		</label>
-		<input id="img_input" name="img"  style="width:50em;" value="{{object.IMG}}">
+		<input id="img_input" name="img"  style="width:50em; display:block;" value="{{object.IMG}}" >
 		</div>
 		<div>
 		<label for="descs_input">descs</label>
-		<textarea id="descs_input" name="descs">{{object.DESCS}}</textarea>
+		<textarea id="descs_input" name="descs" rows="10" cols="50" >{{object.DESCS}}</textarea>
 		</div>
 		<input type="submit" value="submit">
 	</form>
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.0.min.js"></script>
+	<script>
+		$(function(){
+			function display_img_from(img_input){
+				var imgSource = img_input.value;
+				if (imgSource){
+					var img = document.querySelector("#img_preview");
+					if (! img) {
+						img = document.createElement("img");
+						img.id = "img_preview";
+					}
+					img.src = imgSource;
+					var ii = document.querySelector("#img_input")
+					ii.parentNode.insertBefore(img, ii.nextSibling);
+				}
+			}
+			/* init preview */
+			display_img_from($("#img_input")[0])
+			/* event preview */
+			$("#img_input").change(function(e){
+				display_img_from(this);
+			});
+		});
+	</script>
 </body>
 </html>

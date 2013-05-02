@@ -140,7 +140,6 @@ def _down_merge_up(down_name, up_name):
     commits = conn.query(
         "SELECT HEAD FROM BRANCH_MERGE WHERE BRANCH_NAME=%s AND STATE!='^' AND STATE !='!^'",
         *(up_name,))
-    import pdb; pdb.set_trace()
     water_flat_commits = []
     for commit in commits:
         branch_add_commit(down_name, commit.HEAD, "!")
