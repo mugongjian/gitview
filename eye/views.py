@@ -20,6 +20,7 @@ class Commit(web.RequestHandler):
         models.sync_branch(branch_name, commit, owner)
         self.write("{}")
 
+
 class Merge(web.RequestHandler):
 
     def post(self):
@@ -31,9 +32,9 @@ class Merge(web.RequestHandler):
         models.branch_merge(target_name, source_name)
         self.write("{}")
 
-class ProjectView(web.RequestHandler):
 
-    def get(self, pk):
+class ProjectView(web.RequestHandler):
+    def mod_body(self, pk):
         project_id = pk
         branches = []
         for branchname in ["master", "beta", "pre", "dev"]:
@@ -45,11 +46,14 @@ class ProjectView(web.RequestHandler):
                 name=branchname)
             branches.append(data)
         features = models.features()
-        self.render(
+        return self.render_string(
             "templates/branch.html",
             branches=branches,
             features=features)
 
+    def get(self, pk):
+        body = self.mod_body(pk)
+        self.render("templates/base.html", body=body)
 
 class HomeView(ProjectView):
 
