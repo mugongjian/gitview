@@ -79,7 +79,7 @@
 			{% for feature in branch["feature"][0]%}
 			<a href="/branch/{{feature.ID}}/edit" alt="">
 			{% if feature.IMG %}
-			<img src="{{feature.IMG}}"  title="{{feature.DESCS}}">
+			<img src="{{feature.IMG}}"  title="{{feature.DESCS}}" class="img-circle">
 			{%else %}
 			<p title="{{feature.DESCS}}">{{feature.NAME}}<p>
 			{%end %}
@@ -102,11 +102,11 @@
 	</div>
 </div>
 {% end %}
-<div class="feature">
+<div class="feature row-fluid show-grid">
 	
 {% for feature in features %}
-<div class="feature-box">
-	<div class="core">
+<div class="feature-box ">
+	<div class="core ">
 		<a href="/branch/{{feature.ID}}/edit" alt="">
 		{% if feature.IMG %}
 		<img src="{{feature.IMG}}"  title="{{feature.DESCS}}" class="img-circle">
@@ -130,8 +130,6 @@
 {% end%}
 </div>
 <script>
-
-
 $(function(){
 	$(".feature-box").map(function(index, featureBox){
 		var children = featureBox.children;
