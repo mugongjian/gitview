@@ -117,11 +117,11 @@
 	</div>
 	{% for merge in feature.merges %}
 	<div class="merge">
-		<a href="/branch/{{feature.ID}}/edit" alt="">
-		{% if feature.IMG %}
-		<img src="{{feature.IMG}}"  title="{{feature.DESCS}}" class="img-circle">
+		<a href="/branch/{{merge.ID}}/edit" alt="">
+		{% if merge.IMG %}
+		<img src="{{merge.IMG}}"  title="{{merge.DESCS}}" class="img-circle">
 		{%else %}
-		<p title="{{feature.DESCS}}">{{feature.NAME}}<p>
+		<p title="{{merge.DESCS}}">{{merge.NAME}}<p>
 		{%end %}
 		</a>
 	</div>
