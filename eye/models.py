@@ -142,12 +142,10 @@ def _down_merge_up(down_name, up_name):
         *(up_name,))
     water_flat_commits = []
     for commit in commits:
-        branch_add_commit(down_name, commit.HEAD, "!")
-        import logging
-        logging.error(commit)
         if water_commit_is_flat(commit.HEAD, down_name):
             water_flat_commits.append(commit)
-
+        else:
+            branch_add_commit(down_name, commit.HEAD, "!")
     if water_flat_commits:
         for commit in water_flat_commits:
             conn.execute(
