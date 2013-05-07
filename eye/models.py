@@ -40,8 +40,8 @@ def commit_is_flat(commit, branch_name):
 def water_commit_is_flat(commit, branch_name):
     commit_state = conn.query(
         "SELECT STATE FROM BRANCH_MERGE WHERE BRANCH_NAME=%s AND HEAD=%s",
-        *(branch_name, commit))[0]
-    if commit_state.STATE == "!^":
+        *(branch_name, commit))
+    if commit_state and commit_state[0].STATE == "!^":
         return True
     branch_counts = conn.query(
         "SELECT COUNT(ID) AS COUNTS FROM BRANCH WHERE NAME REGEXP %s",
