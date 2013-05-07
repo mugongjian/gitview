@@ -222,7 +222,7 @@ def features():
 
 def branch_by_id(pk):
     return conn.query(
-        "SELECT NAME,IMG, DESCS FROM BRANCH WHERE ID=%s",
+        "SELECT NAME,IMG, DESCS,HEAD FROM BRANCH WHERE ID=%s",
         *(pk, ))
 
 
