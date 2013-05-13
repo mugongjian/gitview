@@ -1,7 +1,7 @@
 <style>
-
 .branch{
 	margin:0 0 5px 0;
+	letter-spacing: -1em;
 }
 .branch .branchname {
 	display:inline-block;
@@ -9,21 +9,24 @@
 	width:10%;
 	border-top: 2px black;
 	background-color:#D5BF8A;	
-	float: left;
+	letter-spacing: normal;
+	vertical-align: top;
 }
 .branch .up{
 	display: inline-block;
 	width:45%;
 	height:200px;
 	background-color:green;
-	float: left;
+	letter-spacing: normal;
+	vertical-align: top;
 }
 .branch .down {
 	display:inline-block;
 	width:45%;
 	height:200px;
 	background-color: #C4E2EA;
-	float: left;
+	letter-spacing: normal;
+	vertical-align: top;
 }
 .branch .features{
 	display:inline;
@@ -38,8 +41,6 @@
 
 .feature {
 	margin-top:10px;
-	clear:both;
-	width:99%;
 	background-color:#EEE;
 	border: solid 2px #FFF;
 	overflow-y:auto;
@@ -66,9 +67,8 @@
 	border-radius: 500px;
 	border: solid 1px #0088cc;
 }
-
-
 </style>
+<section style="margin-top:5px;">
 {% for branch in branches %}
 <div class="branch">
 	<div class="branchname">
@@ -103,7 +103,6 @@
 </div>
 {% end %}
 <div class="feature row-fluid show-grid">
-	
 {% for feature in features %}
 <div class="feature-box ">
 	<div class="core ">
@@ -115,6 +114,7 @@
 		{%end %}
 		</a>
 	</div>
+	<!--
 	{% for merge in feature.merges %}
 	<div class="merge">
 		<a href="/branch/{{merge.ID}}/edit" alt="">
@@ -126,9 +126,11 @@
 		</a>
 	</div>
 	{% end%}
+-->
 </div>
 {% end%}
 </div>
+</section>
 <script>
 $(function(){
 	$(".feature-box").map(function(index, featureBox){
