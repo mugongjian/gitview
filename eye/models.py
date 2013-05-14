@@ -209,8 +209,10 @@ def branch_feature(branch_name):
     return feature
 
 
-def features():
-    features = conn.query("SELECT ID, NAME, DESCS, STATE, IMG, HEAD FROM BRANCH WHERE STATE='0'")
+def features(project_id):
+    feature_sql ="SELECT ID, NAME, DESCS, STATE, IMG, HEAD FROM BRANCH" +\
+    " WHERE STATE='0' AND LOCATE(%s,NAME)=1"
+    features = conn.query(feature_sql % project_id)
     for feature in features:
         merges = branch_feature(feature.NAME)
         merges = filter(lambda i: i.HEAD != feature.HEAD, merges)

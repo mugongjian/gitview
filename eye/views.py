@@ -45,7 +45,7 @@ class ProjectView(web.RequestHandler):
             data = dict(feature=(upfeature, downfeature),
                 name=branchname)
             branches.append(data)
-        features = models.features()
+        features = models.features(project_id)
         return self.render_string(
             "templates/branch.html",
             branches=branches,
