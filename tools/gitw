@@ -96,7 +96,7 @@ def main(argv):
     else:
         if has_argument:
             argv[0] = real_git
-        os.execv(real_git, argv if has_argument else [""])
+        os.execv(real_git, argv if has_argument else [real_git])
 
 if __name__ == "__main__":
     main(sys.argv)
