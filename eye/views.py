@@ -1,5 +1,6 @@
 # Create your views here.
 from tornado import web
+import re
 import models
 
 
@@ -71,4 +72,7 @@ class Edit(web.RequestHandler):
         img = self.get_argument("img")
         descs = self.get_argument("descs")
         models.update_branch(pk, img, descs)
-        self.redirect("/")
+        branch = models.branch_by_id(pk)[0]
+        name = branch.NAME
+        projectid = re.match('(\d+)/*', name).group(1)
+        self.redirect("/" + str(projectid) + "/")
