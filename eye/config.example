@@ -1,0 +1,8 @@
+# -*- coding: utf-8 -*-
+DB = ("","", "", "")
+APP_PORT = 8002
+STATIC_PATH = ""
+APP=dict(
+    debug=True,
+    autoescape=None,
+    static_path=STAITC_PATH)
