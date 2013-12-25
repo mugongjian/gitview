@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-db_config= dict(
-    host="ux.etao.net",
-    db="workflow",
-    user="workflow",
-    password="workflow"
-    )
+DB = ("ux.etao.net","workflow", "workflow", "workflow")
+APP_PORT = 8002
+STATIC_PATH = "/home/jpg/Code/gitview/eye/static"
+APP=dict(
+    debug=True,
+    autoescape=None,
+    static_path=STAITC_PATH)

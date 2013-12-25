@@ -11,11 +11,8 @@ def main():
         (r"/branch/(?P<pk>\d+)/edit", views.Edit),
         (r"/", views.HomeView),
         )
-    web.Application(
-        urls,
-        debug=True,
-        autoescape=None,
-        static_path="/home/jpg/Code/gitview/eye/static").listen(8002)
+    app = web.Application(urls, **config.APP)
+    app.listen(config.APP_PORT)
     ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":

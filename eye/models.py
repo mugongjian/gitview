@@ -1,7 +1,7 @@
 #coding=utf-8
-from torndb import Connection
-from config import db_config
-conn = Connection(db_config["host"], db_config["db"], user=db_config["user"], password=db_config["password"])
+import torndb
+import config
+conn = torndb.Connection(*config.DB)
 IS_FEATURE_BRANCH = "0"
 IS_MERGE_BRANCH = "1"
 
