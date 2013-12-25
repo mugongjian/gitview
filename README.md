@@ -11,7 +11,7 @@ show progress of features,not focus on code ,focus on feature
 2 添加如下内容到~/.bash_profile
 
 export REAL_GIT_PATH=`which git`
-export MERGE_HOST='ued.etao.net:8003'
+export MERGE_HOST='localhost:8003'
 export GIT_USER='your name'
 
 3 source ~/.bash_profile
